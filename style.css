@@ -1,0 +1,145 @@
+body, html {
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+form {
+    max-width: 500px;
+    margin: 0 auto;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="file"] {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+
+  input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 10px 20px;
+    border: 20px solid #ccc;
+    cursor: pointer;
+    margin-left: 200px;
+    margin-bottom: 10px;
+  }
+  select {
+    width: 103%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  .container {
+    display: flex;
+    justify-content: space-between;
+}
+
+#pdfPreview, #dbPdfPreview {
+    flex: 1 0 45%; /* flex-grow: 1, flex-shrink: 0, flex-basis: 45% */
+    height: 500px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+    overflow: auto; /* Add a scrollbar if necessary */
+}
+
+  header {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  nav ul li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+  
+  nav ul li a {
+    color: #fff;
+    text-decoration: none;
+    padding: 5px;
+  }
+  
+  main {
+    padding: 20px;
+  }
+  
+  section {
+    margin-bottom: 30px;
+    padding: 40px;
+    background-color: #f2f2f2;
+  }
+  
+  section h2 {
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+  
+  section p {
+    color: #777;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .services {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .services .service {
+    flex-basis: 33%;
+    padding: 10px;
+  }
+  
+  footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  @keyframes fadeIn {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
+  }
+  
+  @keyframes slideIn {
+    0% {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    100% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animated {
+    animation-duration: 1s;
+    animation-fill-mode: both;
+  }
+  
+  .fadeIn {
+    animation-name: fadeIn;
+  }
+  
+  .slideIn {
+    animation-name: slideIn;
+  }
