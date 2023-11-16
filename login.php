@@ -140,10 +140,10 @@
     <div class="header-title">NDVS</div>
         <nav>
             <ul>
-                <li><a href="index.php">Home</a></li>
-                <li><a href="index.php">About</a></li>
-                <li><a href="index.php">Services</a></li>
-                <li><a href="index.php">Contact</a></li>
+                <li><a href="index.php#home">Home</a></li>
+                <li><a href="index.php#about">About</a></li>
+                <li><a href="index.php#services">Services</a></li>
+                <li><a href="index.php#contact">Contact</a></li>
             </ul>
         </nav>
     </header>

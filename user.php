@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>National document verification system</title>
     <link rel="stylesheet" href="style.css" Content-Type="application/javascript">
-    <script src="jquery.min.js"></script>
     <style>
          .header {
             display: flex;
@@ -42,7 +41,7 @@
                 reader.onload = function(){
                     $("#pdfPreview").html('<embed src="'+reader.result+'" width="100%" height="100%" type="application/pdf">');
                 }
-
+                
                 reader.readAsDataURL(file);
             }
         }

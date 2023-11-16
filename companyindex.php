@@ -174,7 +174,7 @@ form {
 			<form id="paymentForm">
 				<input type="text" name="fileName" placeholder="File Name" required>
 				<input type="text" name="userName" placeholder="Your Name" required>
-				<input type="text" name="email" placeholder="Email" required>
+				<input type="email" name="email" placeholder="Email" required>
 				<input type="submit" value="Proceed to Payment">
 			</form>
 		</div>

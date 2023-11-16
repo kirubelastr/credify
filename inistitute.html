@@ -1,283 +1,543 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Educational Institute Document Upload</title>
-  <style>
-    /* Global styles */
-    body {
-      margin: 0;
-      padding: 0;
-      font-family: Arial, sans-serif;
-    }
+    <title>Educational Institute Document Upload</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-    header {
-      background-color: #333;
-      color: #fff;
-      padding: 20px;
-      text-align: center;
-    }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #333;
+        }
 
-    main {
-      padding: 20px;
-    }
+        .header-title {
+            font-size: 24px;
+            color: #fff;
+            font-weight: bold;
+        }
 
-    h1 {
-      color: #333;
-      font-size: 24px;
-      margin-bottom: 20px;
-    }
+        .logout-icon {
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
 
-    .container {
-      display: flex;
-      flex-wrap: wrap;
-    }
+        .logout-icon:hover {
+            color: #333;
+        }
 
-    .card {
-      flex-basis: 48%;
-      padding: 20px;
-      margin: 10px;
-      background-color: #f2f2f2;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      border-radius: 4px;
-    }
+        .descriptions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 30%;
+        }
 
-    label {
-      display: block;
-      margin-bottom: 10px;
-    }
+        main {
+            padding: 20px;
+        }
 
-    input[type="file"] {
-      margin-bottom: 10px;
-    }
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
 
-    input[type="submit"] {
-      background-color: #333;
-      color: #fff;
-      padding: 10px 20px;
-      border: none;
-      cursor: pointer;
-    }
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+        }
 
-    .success-message {
-      color: green;
-      margin-top: 10px;
-    }
+        .card {
+            flex-basis: 33%;
+            padding: 20px;
+            margin: 10px;
+            background-color: #f2f2f2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        .card1{
+            margin-top:3%;
+            margin-bottom:10px;
+            flex-basis: 58%;
+            padding: 20px;
+            background-color: #f2f2f2;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 4px;
+        }
+        
+        .resentuploadedData table {
+            width: 50%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
 
-    .error-message {
-      color: red;
-      margin-top: 10px;
-    }
+        .resentuploadedData table th,
+        .resentuploadedData table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
 
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
+        .pdf-preview {
+            width: 100%;
+            height: 500px;
+        }
 
-    table th,
-    table td {
-      padding: 10px;
-      border: 1px solid #ccc;
-    }
 
-    .pdf-preview {
-      width: 100%;
-      height: 100%;
-    }
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
 
-    /* Popup styles */
-    .popup {
-      display: none;
-      position: fixed;
-      z-index: 1;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      overflow: auto;
-      background-color: rgba(0, 0, 0, 0.5);
-    }
+        input[type="file"] {
+            margin-bottom: 10px;
+        }
 
-    .popup-content {
-      background-color: #f2f2f2;
-      margin: 10% auto;
-      padding: 20px;
-      border: 1px solid #888;
-      width: 80%;
-    }
+        input[type="submit"] {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
 
-    .close-btn {
-      color: #888;
-      float: right;
-      font-size: 28px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+        .success-message {
+            color: green;
+            margin-top: 10px;
+        }
 
-    .close-btn:hover,
-    .close-btn:focus {
-      color: #000;
-      text-decoration: none;
-      cursor: pointer;
-    }
-  </style>
+        .error-message {
+            color: red;
+            margin-top: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table th,
+        table td {
+            padding: 10px;
+            border: 1px solid #ccc;
+        }
+
+        .pdf-preview {
+            width: 100%;
+            height: 500px;
+        }
+
+        .popup {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 800px;
+            overflow: auto;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        .popup-content {
+            background-color: #f2f2f2;
+            margin: 5% auto;
+            padding: 10px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close-btn {
+            color: #888;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-btn:hover,
+        .close-btn:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        #editPopup {
+            display: none;
+        }
+    </style>
 </head>
+
 <body>
-  <header>
-    <h1>Educational Institute Document Upload</h1>
-  </header>
-
-  <main>
-    <div class="container">
-      <div class="card">
-        <h2>Individual Upload</h2>
-        <form id="individualUploadForm">
-          <label for="individualFirstName">First Name:</label>
-          <input type="text" id="individualFirstName" name="individualFirstName" required>
-          <label for="individualMiddleName">Middle Name:</label>
-          <input type="text" id="individualMiddleName" name="individualMiddleName">
-          <label for="individualLastName">Last Name:</label>
-          <input type="text" id="individualLastName" name="individualLastName" required>
-          <label for="individualFileNumber">File Number:</label>
-          <input type="text" id="individualFileNumber" name="individualFileNumber" required>
-          <label for="individualFile">PDF Document:</label>
-          <input type="file" id="individualFile" name="individualFile" onchange="showPdfPreviewPopup(this)" required>
-          <input type="submit" value="Upload">
-        </form>
-        <div id="individualUploadMessage" class="success-message"></div>
-      </div>
+    <header class="header">
+        <div class="header-title">NDVS</div>
+        <div class="logout-icon" onclick="logout()">Logout</div>
+    </header>
+    <div class="descriptions">
+        <h1>Educational Institutes Data and Document Upload</h1>
     </div>
 
-    <h2>Uploaded Data</h2>
-    <table id="uploadedData">
-      <thead>
-        <tr>
-          <th>First Name</th>
-          <th>Middle Name</th>
-          <th>Last Name</th>
-          <th>File Number</th>
-          <th>PDF Document</th>
-          <th>Edit</th>
-        </tr>
-      </thead>
-      <tbody>
-        <!-- Dynamically populated with JavaScript -->
-      </tbody>
-    </table>
+    <main>
+        <div class="container">
+            <div class="card">
+                <h2>Individual Upload</h2>
+                <form id="individualUploadForm" enctype="multipart/form-data">
+                    <label for="individualFirstName">First Name:</label>
+                    <input type="text" id="individualFirstName" name="firstname" required>
+                    <label for="individualMiddleName">Middle Name:</label>
+                    <input type="text" id="individualMiddleName" name="middlename" required>
+                    <label for="individualLastName">Last Name:</label>
+                    <input type="text" id="individualLastName" name="lastname" required>
+                    <label for="instituteName">Institute Name:</label>
+                    <input type="text" id="instituteName" name="inistitutename" required>
+                    <label for="documentType">Document Type:</label>
+                    <input type="text" id="documentType" name="documenttype" required>
+                    <label for="individualFileNumber">File Identifier:</label>
+                    <input type="text" id="individualFileNumber" name="fileidentifier" required>
+                    <label for="individualFile">PDF Document:</label>
+                    <input type="file" id="individualFile" name="document" onchange="showPdfPreviewPopup(this)" required>
+                    <label for="userEmail">User Email:</label>
+                    <input type="email" id="userEmail" name="useremail" required>
+                    <input type="submit" value="Upload">
+                </form>
+                <div id="individualUploadMessage" class="success-message"></div>
+            </div>
+    
+            <div class="card1">
+                <h2><u>Recently Uploaded data</u></h2>
+                <table class="resentuploadedData" id="resentuploadedData">
+                    <thead>
+                        <tr>
+                            <th>First Name</th>
+                            <th>Middle Name</th>
+                            <th>Last Name</th>
+                            <th>Institute Name</th>
+                            <th>Document Type</th>
+                            <th>File Identifier</th>
+                            <th>PDF Document</th>
+                            <th>User Email</th>
+                            <th>Edit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Dynamically populated with JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    
+        <h2>Uploaded Data</h2>
+        <table id="uploadedData">
+            <thead>
+                <tr>
+                    <th>id</th>
+                    <th>First Name</th>
+                    <th>Middle Name</th>
+                    <th>Last Name</th>
+                    <th>Institute Name</th>
+                    <th>Document Type</th>
+                    <th>File Identifier</th>
+                    <th>PDF Document</th>
+                    <th>User Email</th>
+                    <th>Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dynamically populated with JavaScript -->
+            </tbody>
+        </table>
+    
+        <div id="pdfPreviewPopup" class="popup">
+            <div id="pdfPreviewContent" class="popup-content">
+                <span class="close-btn" onclick="closePdfPreviewPopup()">&times;</span>
+                <object id="pdfPreview" class="pdf-preview" data="" type="application/pdf"></object>
+            </div>
+        </div>
+    
+        <div id="editPopup" class="popup">
+            <div id="editPopupContent" class="popup-content">
+                <span class="close-btn" onclick="closeEditPopup()">&times;</span>
+                <h2>Edit Entry</h2>
+                <form id="editForm">
+                    <label for="editFirstName">First Name:</label>
+                    <input type="text" id="editFirstName" name="editFirstName" required>
+                    <label for="editMiddleName">Middle Name:</label>
+                    <input type="text" id="editMiddleName" name="editMiddleName" required>
+                    <label for="editLastName">Last Name:</label>
+                    <input type="text" id="editLastName" name="editLastName" required>
+                    <label for="editInstituteName">Institute Name:</label>
+                    <input type="text" id="editInstituteName" name="editInstituteName" required>
+                    <label for="editDocumentType">Document Type:</label>
+                    <input type="text" id="editDocumentType" name="editDocumentType" required>
+                    <label for="editFileIdentifier">File Identifier:</label>
+                    <input type="text" id="editFileIdentifier" name="editFileIdentifier" required>
+                    <!-- Change the input type to "file" for editing the document -->
+                    <label for="editDocument">Upload New PDF Document:</label>
+                    <input type="file" id="editDocument" name="editDocument">
+                    <label for="editUserEmail">User Email:</label>
+                    <input type="email" id="editUserEmail" name="editUserEmail" required>
+                    <input type="submit" value="Save Changes">
+                </form>
+            </div>
+        </div>
+    </main>
+    <script>
+        var editingRowIndex; // Declare the editingRowIndex variable
+        var selectedRowData; // Declare the selectedRowData variable
+    
+        function logout() {
+            window.location.href = "index.php";
+        }
+    
+        function showPdfPreviewPopup(fileInput) {
+            var file = fileInput.files[0];
+            var pdfPreviewPopup = document.getElementById("pdfPreviewPopup");
+            var pdfPreviewContent = document.getElementById("pdfPreviewContent");
+            var pdfPreview = document.getElementById("pdfPreview");
+    
+            var reader = new FileReader();
+            reader.onload = function (e) {
+                pdfPreview.setAttribute("data", e.target.result);
+            };
+    
+            if (file) {
+                reader.readAsDataURL(file);
+                pdfPreviewPopup.style.display = "block";
+                pdfPreviewContent.style.display = "block";
+            } else {
+                pdfPreviewPopup.style.display = "none";
+                pdfPreviewContent.style.display = "none";
+            }
+        }
+    
+        function closePdfPreviewPopup() {
+            var pdfPreviewPopup = document.getElementById("pdfPreviewPopup");
+            var pdfPreviewContent = document.getElementById("pdfPreviewContent");
+            var pdfPreview = document.getElementById("pdfPreview");
+    
+            pdfPreviewPopup.style.display = "none";
+            pdfPreviewContent.style.display = "none";
+            pdfPreview.setAttribute("data", "");
+        }
+    
+        document.getElementById("individualUploadForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+    
+            var formData = new FormData(this);
+    
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "save_to_db.php", true);
+    
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var responseData = JSON.parse(xhr.responseText);
+    
+                    if (responseData && responseData.success) {
+                        updateTable(responseData.data, "resentuploadedData");
+                        getAllData(); // Call getAllData to update the main table
+                    } else {
+                        console.error("Error in server response");
+                    }
+                } else {
+                    console.error("Request failed with status:", xhr.status);
+                }
+            };
+    
+            xhr.onerror = function () {
+                console.error("Network error occurred");
+            };
+    
+            xhr.send(formData);
+        });
+        function updateTable(data, tableId) {
+            var tableBody = document.querySelector("#" + tableId + " tbody");
 
-    <!-- Popup content for the PDF preview -->
-    <div id="pdfPreviewPopup" class="popup">
-      <div id="pdfPreviewContent" class="popup-content">
-        <span class="close-btn" onclick="closePdfPreviewPopup()">&times;</span>
-        <object id="pdfPreview" class="pdf-preview" data="" type="application/pdf"></object>
-      </div>
-    </div>
+            // Clear existing rows in the table
+            tableBody.innerHTML = '';
 
-  </main>
+            // Check if data is an array
+            if (Array.isArray(data)) {
+                // Iterate through the data and add rows to the table
+                data.forEach(function (rowData) {
+                    var newRow = document.createElement("tr");
 
-  <script>
-    // Function to show the PDF preview popup
-    function showPdfPreviewPopup(fileInput) {
-      var file = fileInput.files[0];
-      var pdfPreviewPopup = document.getElementById("pdfPreviewPopup");
-      var pdfPreviewContent = document.getElementById("pdfPreviewContent");
-      var pdfPreview = document.getElementById("pdfPreview");
+                    for (var key in rowData) {
+                        if (rowData.hasOwnProperty(key)) {
+                            var cell = document.createElement("td");
+                            cell.textContent = rowData[key];
+                            newRow.appendChild(cell);
+                        }
+                    }
 
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        pdfPreview.setAttribute("data", e.target.result);
-      };
+                    // Add an "Edit" link to the new row
+                    var editCell = document.createElement("td");
+                    var editLink = document.createElement("a");
+                    editLink.href = "javascript:void(0)";
+                    editLink.textContent = "Edit";
+                    editLink.onclick = function () {
+                        openEditPopup(rowData);
+                    };
+                    editCell.appendChild(editLink);
+                    newRow.appendChild(editCell);
 
-      if (file) {
-        reader.readAsDataURL(file);
-        pdfPreviewPopup.style.display = "block";
-        pdfPreviewContent.style.display = "block";
-      } else {
-        pdfPreviewPopup.style.display = "none";
-        pdfPreviewContent.style.display = "none";
-      }
-    }
+                    tableBody.appendChild(newRow);
+                });
+            } else if (typeof data === 'object') {
+                // If data is an object, convert it to an array with one element
+                var newRow = document.createElement("tr");
 
-    // Function to close the PDF preview popup
-    function closePdfPreviewPopup() {
-      var pdfPreviewPopup = document.getElementById("pdfPreviewPopup");
-      var pdfPreviewContent = document.getElementById("pdfPreviewContent");
-      var pdfPreview = document.getElementById("pdfPreview");
+                for (var key in data) {
+                    if (data.hasOwnProperty(key)) {
+                        var cell = document.createElement("td");
+                        cell.textContent = data[key];
+                        newRow.appendChild(cell);
+                    }
+                }
 
-      pdfPreviewPopup.style.display = "none";
-      pdfPreviewContent.style.display = "none";
-      pdfPreview.setAttribute("data", "");
-    }
+                // Add an "Edit" link to the new row
+                var editCell = document.createElement("td");
+                var editLink = document.createElement("a");
+                editLink.href = "javascript:void(0)";
+                editLink.textContent = "Edit";
+                editLink.onclick = function () {
+                    openEditPopup(data);
+                };
+                editCell.appendChild(editLink);
+                newRow.appendChild(editCell);
 
-    // Function to handle individual upload form submission
-    document.getElementById("individualUploadForm").addEventListener("submit", function (e) {
-      e.preventDefault();
+                tableBody.appendChild(newRow);
+            } else {
+                console.error("Invalid data format:", data);
+            }
+        }
 
-      var firstName = document.getElementById("individualFirstName").value;
-      var middleName = document.getElementById("individualMiddleName").value;
-      var lastName = document.getElementById("individualLastName").value;
-      var fileNumber = document.getElementById("individualFileNumber").value;
-      var fileInput = document.getElementById("individualFile");
-      var file = fileInput.files[0];
+        function getAllData() {
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "get_all_data.php", true);
 
-      var reader = new FileReader();
-      reader.onload = function (e) {
-        var pdfData = e.target.result;
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    try {
+                        var response = JSON.parse(xhr.responseText);
+                        console.log(response); // Log the response to check its structure
 
-        // Create a new table row
-        var newRow = document.createElement("tr");
+                        if (response.success) {
+                            var data = response.data;
 
-        // Create table cells for each data
-        var firstNameCell = document.createElement("td");
-        firstNameCell.textContent = firstName;
-        newRow.appendChild(firstNameCell);
+                            if (Array.isArray(data)) {
+                                updateTable(data, "uploadedData");
+                            } else if (typeof data === 'object') {
+                                // If it's an object, convert it to an array with one element
+                                updateTable([data], "uploadedData");
+                            } else {
+                                console.error("Invalid data format:", data);
+                            }
+                        } else {
+                            console.error("Request failed:", response.error);
+                        }
+                    } catch (e) {
+                        console.error("JSON.parse() failed:", e);
+                    }
+                } else {
+                    console.error("Request failed with status:", xhr.status);
+                }
+            };
 
-        var middleNameCell = document.createElement("td");
-        middleNameCell.textContent = middleName;
-        newRow.appendChild(middleNameCell);
+            xhr.onerror = function () {
+                console.error("Network error occurred");
+            };
 
-        var lastNameCell = document.createElement("td");
-        lastNameCell.textContent = lastName;
-        newRow.appendChild(lastNameCell);
+            xhr.send();
+        }
 
-        var fileNumberCell = document.createElement("td");
-        fileNumberCell.textContent = fileNumber;
-        newRow.appendChild(fileNumberCell);
 
-        var fileCell = document.createElement("td");
-        var fileLink = document.createElement("a");
-        fileLink.href = pdfData;
-        fileLink.target = "_blank";
-        fileLink.textContent = "View PDF";
-        fileCell.appendChild(fileLink);
-        newRow.appendChild(fileCell);
+            // Call getAllData on page load to populate the main table
+            window.onload = getAllData;
 
-        var editCell = document.createElement("td");
-        var editLink = document.createElement("a");
-        editLink.href = "#";
-        editLink.textContent = "Edit";
-        editCell.appendChild(editLink);
-        newRow.appendChild(editCell);
+            function openEditPopup(data) {
+            var editPopup = document.getElementById("editPopup");
+            var editPopupContent = document.getElementById("editPopupContent");
 
-        // Append the new row to the table
-        var tableBody = document.querySelector("#uploadedData tbody");
-        tableBody.appendChild(newRow);
+            // Populate the edit form with existing data
+            for (var key in data) {
+                if (data.hasOwnProperty(key)) {
+                    var element = document.getElementById("edit" + key);
+                    if (element) {
+                        element.value = data[key];
+                    }
+                }
+            }
 
-        // Reset the form fields
-        document.getElementById("individualFirstName").value = "";
-        document.getElementById("individualMiddleName").value = "";
-        document.getElementById("individualLastName").value = "";
-        document.getElementById("individualFileNumber").value = "";
-        document.getElementById("individualFile").value = "";
+            // Handle the file input separately
+            var oldFileInput = document.getElementById("editDocument");
+            var newFileInput = document.createElement("input");
+            newFileInput.type = "file";
+            newFileInput.id = oldFileInput.id;
+            newFileInput.name = oldFileInput.name;
 
-        // Show success message
-        var individualUploadMessage = document.getElementById("individualUploadMessage");
-        individualUploadMessage.textContent = "File uploaded successfully.";
-        individualUploadMessage.style.display = "block";
-      };
+            // Replace the old file input with the new one
+            oldFileInput.parentNode.replaceChild(newFileInput, oldFileInput);
 
-      reader.readAsDataURL(file);
-    });
-  </script>
+            // Set the editingRowIndex for later use
+            editingRowIndex = data["id"];
+
+            editPopup.style.display = "block";
+            editPopupContent.style.display = "block";
+        }
+
+
+        function closeEditPopup() {
+            var editPopup = document.getElementById("editPopup");
+            var editPopupContent = document.getElementById("editPopupContent");
+    
+            editPopup.style.display = "none";
+            editPopupContent.style.display = "none";
+        }
+    
+        document.getElementById("editForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+    
+            var formData = new FormData(this);
+            formData.append("editingRowIndex", editingRowIndex);
+    
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "update_in_db.php", true);
+    
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log(xhr.responseText);
+                    var responseData = JSON.parse(xhr.responseText);
+    
+                    if (responseData && responseData.success) {
+                        getAllData();
+                    } else {
+                        console.error("Error in server response");
+                    }
+                } else {
+                    console.error("Request failed with status:", xhr.status);
+                }
+            };
+    
+            xhr.onerror = function () {
+                console.error("Network error occurred");
+            };
+    
+            xhr.send(formData);
+        });
+    </script>
+    
 </body>
+
 </html>
