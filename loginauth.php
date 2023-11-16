@@ -22,7 +22,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 } elseif ($role === 'company') {
                     header("Location: companyindex.php");
                 } elseif ($role === 'institute') {
-                    header("Location: institute.html");  
+                    header("Location: inistitute.html");  
                 } else {
                     header("Location: user.php");
                 }

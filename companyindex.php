@@ -1,234 +1,120 @@
-<?php include 'header.php'; ?>
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-	<title>PDF Viewer | Home</title>
-	<style>
-		/* CSS styles for the form and preview */
-form {
-    max-width: 500px;
-    margin: 0 auto;
-  }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>National document verification system</title>
+    <link rel="stylesheet" href="style.css" Content-Type="application/javascript">
+    <script src="jquery.min.js"></script>
+    <style>
+         .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #333;
+        }
 
-  label {
-    display: block;
-    margin-bottom: 10px;
-  }
+        .header-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
 
-  input[type="text"],
-  input[type="email"],
-  input[type="file"] {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-  }
+        .logout-icon {
+            font-size: 24px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
 
-  input[type="submit"] {
-    background-color: #333;
-    color: #fff;
-    padding: 10px 20px;
-    border: 20px solid #ccc;
-    cursor: pointer;
-    margin-left: 200px;
-    margin-bottom: 10px;
-  }
-  select {
-    width: 103%;
-    padding: 5px;
-    margin-bottom: 10px;
-  }
+        .logout-icon:hover {
+            color: #333;
+        }
+    </style>
+    <script>
+        function previewFile(input) {
+            var file = $("input[type=file]").get(0).files[0];
 
-  /* CSS styles for the preview section */
-  .container {
-    display: flex;
-    justify-content: space-between;
-  }
+            if(file){
+                var reader = new FileReader();
 
-  #pdfPreview {
-    align-self: start;
-    width: 50%;
-    height: 500px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-  }
-  #dbpdfPreview {
-    align-self: start;
-    width: 50%;
-    height: 500px;
-    border: 1px solid #ccc;
-    margin-bottom: 20px;
-  }
+                reader.onload = function(){
+                    $("#pdfPreview").html('<embed src="'+reader.result+'" width="100%" height="100%" type="application/pdf">');
+                }
 
-  /* Other styles from the previous code */
-  body, html {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  header {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  nav ul li {
-    display: inline-block;
-    margin-right: 10px;
-  }
-  
-  nav ul li a {
-    color: #fff;
-    text-decoration: none;
-    padding: 5px;
-  }
-  
-  main {
-    padding: 20px;
-  }
-  
-  section {
-    margin-bottom: 30px;
-    padding: 40px;
-    background-color: #f2f2f2;
-  }
-  
-  section h2 {
-    color: #333;
-    font-size: 24px;
-    margin-bottom: 20px;
-  }
-  
-  section p {
-    color: #777;
-    line-height: 1.6;
-    margin-bottom: 20px;
-  }
-  
-  .services {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  
-  .services .service {
-    flex-basis: 33%;
-    padding: 10px;
-  }
-  
-  footer {
-    background-color: #333;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  @keyframes fadeIn {
-    0% {
-      opacity: 0;
-    }
-    100% {
-      opacity: 1;
-    }
-  }
-  
-  @keyframes slideIn {
-    0% {
-      transform: translateY(50px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  .animated {
-    animation-duration: 1s;
-    animation-fill-mode: both;
-  }
-  
-  .fadeIn {
-    animation-name: fadeIn;
-  }
-  
-  .slideIn {
-    animation-name: slideIn;
-  }
-	</style>
+                reader.readAsDataURL(file);
+            }
+        }
+    $(document).ready(function(){
+        $("#fileUploadForm").on('submit', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: 'fetch.php',
+                type: 'post',
+                data: $(this).serialize(),
+                success: function(response){
+                    if(response != 0){
+                        $("#dbPdfPreview").html('<embed src="'+response+'" width="100%" height="100%" type="application/pdf">');
+                    }else{
+                        alert('No document found');
+                    }
+                },
+            });
+        });
+    });
+        function logout() {
+            window.location.href = "index.php";
+        }
+    </script>
 </head>
+
 <body>
-	<div class="full">
-	<div class="container">
-		<div class="pdf-container">
-			<input type="file" id="pdfFile" accept=".pdf">
-			<div id="pdfViewer"></div>
-		</div>
+<header class="header">
+        <div class="header-title">NDVS</div>
+        <div class="logout-icon" onclick="logout()">Logout</div>
+</header>
+    <section id="home" class="animated fadeIn">
+        <h1>Welcome to the National document verification system</h1>
+        <p>Validate your documents straight from the source.</p>
+        <form id="fileUploadForm" method="post" enctype="multipart/form-data">
+            <label for="firstName">First Name:</label>
+            <input type="text" id="firstName" name="firstName" required>
 
-		<div class="form-container">
-			<form id="paymentForm">
-				<input type="text" name="fileName" placeholder="File Name" required>
-				<input type="text" name="userName" placeholder="Your Name" required>
-				<input type="email" name="email" placeholder="Email" required>
-				<input type="submit" value="Proceed to Payment">
-			</form>
-		</div>
+            <label for="middleName">Middle Name:</label>
+            <input type="text" id="middleName" name="middleName" required>
 
-		<div class="search-container">
-			<input type="text" name="searchFileName" placeholder="Search File Name">
-			<button id="searchButton">Search</button>
-			<div class="search-result">
-				<p><strong>Uploaded Document:</strong> <span id="uploadedFileName"></span></p>
-				<p><strong>Search Result:</strong> <span id="searchResult"></span></p>
-			</div>
-		</div>
-	</div>
+            <label for="lastName">Last Name:</label>
+            <input type="text" id="lastName" name="lastName" required>
 
-	<script>
-		document.getElementById('pdfFile').addEventListener('change', function(e) {
-			var file = e.target.files[0];
-			var reader = new FileReader();
+            <label for="inistname">Institute Name:</label>
+            <input type="text" id="inistname" name="inistname" required>
 
-			reader.onload = function(e) {
-				var pdfViewer = document.getElementById('pdfViewer');
-				pdfViewer.innerHTML = '<iframe src="' + e.target.result + '" width="100%" height="100%" style="border: none;"></iframe>';
-			};
+            <label for="doctype">Document Type:</label>
+            <select id="doctype" name="doctype" required>
+                <option value="">-choose an option-</option>
+                <option value="degree">degree</option>
+                <option value="diploma">diploma</option>
+                <option value="tempo">empo</option>
+            </select>
 
-			reader.readAsDataURL(file);
-		});
+            <label for="filenumber">File Number:</label>
+            <input type="text" id="filenumber" name="filenumber" required>
 
-		document.getElementById('paymentForm').addEventListener('submit', function(e) {
-			e.preventDefault();
-			var fileName = document.getElementById('paymentForm').elements.fileName.value;
-			var userName = document.getElementById('paymentForm').elements.userName.value;
-			var email = document.getElementById('paymentForm').elements.email.value;
+            <label for="document">Upload Document:</label>
+            <input type="file" id="document" name="documentuploded" accept=".pdf" required onchange="previewFile(this);">
 
-			console.log('Payment form submitted with file name: ' + fileName + ', user name: ' + userName + ', email: ' + email);
-			window.location.href = "payment.html";
-		});
-
-		document.getElementById('searchButton').addEventListener('click', function(e) {
-			e.preventDefault();
-			var searchFileName = document.querySelector('.search-container input[name="searchFileName"]').value;
-			var uploadedFileName = document.getElementById('paymentForm').elements.fileName.value;
-			var searchResult = document.getElementById('searchResult');
-			var uploadedFileNameElement = document.getElementById('uploadedFileName');
-
-			if (searchFileName === uploadedFileName) {
-				searchResult.textContent = 'Match found!';
-			} else {
-				searchResult.textContent = 'No match found!';
-			}
-
-			searchResult.style.display = 'block';
-			uploadedFileNameElement.textContent = uploadedFileName;
-		});
-	</script>
-	</div>
+            <input id="submit" type="submit" value="Submit">
+        </form>
+        <div class="container">
+        <div id="pdfPreview">
+            <h1>Uploaded Document</h1>
+        </div>
+        <div id="dbPdfPreview">
+            <h1>The Original Document</h1>
+        </div>
+    </div>
+    </section>
 </body>
+
 </html>
